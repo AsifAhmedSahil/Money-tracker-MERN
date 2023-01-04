@@ -45,7 +45,7 @@ function App() {
       <input type="submit" value="Add Transaction"  className="btn btn-success flex mx-auto mt-10 w-50%"/>
       </form>
 
-      <div className="details mt-10 w-[50%] m-2 p-2 border border-purple-500   ">
+      <div className="details mt-10 w-[50%] m-2 p-2 border border-purple-500 ">
         <div className="flex justify-between p-5 ">
           <div className="left">
             <h2 className="text-3xl font-bold mb-4">New tv</h2>
@@ -68,6 +68,8 @@ function App() {
 
           </div>
           <div className="right">
+          <h2 className="text-3xl font-bold text-green-600 mb-4">+$ 400</h2>
+          <h2 className="text-3xl font-bold text-green-600 mb-4">+$ 400</h2>
           <h2 className="text-3xl font-bold text-green-600 mb-4">+$ 400</h2>
             <h4 className="text-xl font-bold">date & time</h4>
           </div>
