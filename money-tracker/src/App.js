@@ -69,8 +69,6 @@ function App() {
           </div>
           <div className="right">
           <h2 className="text-3xl font-bold text-green-600 mb-4">+$ 400</h2>
-          <h2 className="text-3xl font-bold text-green-600 mb-4">+$ 400</h2>
-          <h2 className="text-3xl font-bold text-green-600 mb-4">+$ 400</h2>
             <h4 className="text-xl font-bold">date & time</h4>
           </div>
         </div>
