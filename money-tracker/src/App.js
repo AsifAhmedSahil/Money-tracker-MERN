@@ -1,6 +1,16 @@
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import "./App.css";
 
 function App() {
+  const [costs,setCosts] = useState([])
+
+  useEffect(() =>{
+    fetch("http://localhost:5000/expense")
+    .then(res => res.json())
+    .then(data => setCosts(data))
+    .catch(err => console.log(err))
+  },[])
 
   const addnewtransaction = event =>{
     event.preventDefault();
@@ -30,6 +40,7 @@ function App() {
       console.log(data)
       if(data.acknowledged){
         form.reset()
+        toast.success("cost added successfully 🙂 ")
 
       }
     })
@@ -38,17 +49,23 @@ function App() {
 
     
   }
+
+  let balance = 0;
+  for (const cost of costs){
+    const convert = parseInt(cost.amount)
+    balance = balance + convert
+  }
   return (
     <div className="flex justify-center flex-col items-center">
       <h1 className="text-6xl text-center mt-10 font-bold">
-        $ 200 <span>.00</span>
+        {balance} <span>.00</span>
       </h1>
       <form onSubmit={addnewtransaction}>
       <div className=" flex justify-center gap-4 mt-10 border-green-500">
         <input
-          type="text"
+          type="number"
           name="amount"
-          placeholder="Type Amount"
+          placeholder="$$ Type Amount"
           className="input w-full max-w-xs bg-gray-500 text-white rounded"
         />
         <input
@@ -58,6 +75,8 @@ function App() {
           className="input w-full max-w-xs bg-gray-500 text-white rounded"
         />
       </div>
+
+      
 
       <div className="flex justify-center mt-10  ">
         <input
@@ -70,51 +89,38 @@ function App() {
 
       <input type="submit" value="Add Transaction"  className="btn btn-success flex mx-auto mt-10 w-50%"/>
       </form>
+{
+  costs.length > 0 &&
 
-      <div className="details mt-10 w-[50%] m-2 p-2 border border-purple-500 ">
+  costs.map(cost => <div className="w-[50%]">
+    <div className="details mt-10 w-full  m-2 p-2 border border-purple-500 ">
         <div className="flex justify-between p-5 ">
           <div className="left">
-            <h2 className="text-3xl font-bold mb-4">New tv</h2>
+            <h2 className="text-3xl font-bold mb-4">{cost.description}</h2>
             <h4 className="text-xl font-bold">Time for buy tv</h4>
 
           </div>
           <div className="right">
-          <h2 className="text-3xl font-bold  mb-4">-$ 500</h2>
-            <h4 className="text-xl font-bold">date & time</h4>
+            {
+              cost.amount < 0 ?
+              <h2 className={"text-3xl font-bold  mb-4 text-red-500 " }>${cost.amount}</h2>
+              : 
+              <h2 className={"text-3xl font-bold  mb-4  text-green-500" }>$+{cost.amount}</h2>
+
+            }
+          
+            <h4 className="text-xl font-bold">{cost.date}</h4>
           </div>
         </div>
 
       </div>
+  </div> )
+}
+      
 
-      <div className="details mt-10  w-[50%] m-2 p-2 border border-purple-500 ">
-        <div className="flex justify-between p-5 ">
-          <div className="left">
-            <h2 className="text-3xl font-bold mb-4">New tv</h2>
-            <h4 className="text-xl font-bold">Time for buy tv</h4>
+     
 
-          </div>
-          <div className="right">
-          <h2 className="text-3xl font-bold text-green-600 mb-4">+$ 400</h2>
-            <h4 className="text-xl font-bold">date & time</h4>
-          </div>
-        </div>
-
-      </div>
-
-      <div className="details mt-10 w-[50%] m-2 p-2 border border-purple-500">
-        <div className="flex justify-between p-5 ">
-          <div className="left">
-            <h2 className="text-3xl font-bold mb-4">New tv</h2>
-            <h4 className="text-xl font-bold">Time for buy tv</h4>
-
-          </div>
-          <div className="right">
-          <h2 className="text-3xl font-bold text-red-600 mb-4">-$ 900</h2>
-            <h4 className="text-xl font-bold">date & time</h4>
-          </div>
-        </div>
-
-      </div>
+      
     </div>
   );
 }
