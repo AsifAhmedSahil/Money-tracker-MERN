@@ -25,6 +25,14 @@ async function run(){
             res.send(result);
         })
 
+
+        app.get("/expense",async(req,res)=>{
+            const query = {}
+            const result = await expenseCollection.find(query,{"_id":1}).sort({_id:-1}).toArray();
+            // const posts = await postCollection.find(query,{"_id":1}).sort({_id:-1}).toArray();
+            res.send(result);
+        })
+
     }
     finally{
 
