@@ -10,6 +10,32 @@ function App() {
     const description = form.description.value;
 
     console.log(amount,date,description)
+
+    const expense = {
+      amount,
+      date,
+      description
+    }
+
+    fetch("http://localhost:5000/expense",{
+      method:"POST",
+      headers: {
+        "content-type":"application/json"
+      },
+      body: JSON.stringify(expense)
+
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      if(data.acknowledged){
+        form.reset()
+
+      }
+    })
+    .catch(err => console.log(err))
+
+
     
   }
   return (
